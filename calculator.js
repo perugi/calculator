@@ -29,37 +29,78 @@ function operate(a, b, operator) {
     }
 }
 
-let displayValue = '0';
+// first, second, calculated;
+let calcState = 'first';
+
+let displayValue = '';
+let operator = '';
+let firstOperand = 0;
+let resultValue = 0;
+
+function refreshDisplay() {
+
+    let calcValue = '';
+    if (calcState === 'second') {
+        calcValue += `${firstOperand} ${operator}`;
+    } else if (calcState === 'calculated')
+        calcValue += resultValue;
+
+    calcDisplay = document.querySelector('#calc-display');
+    calcDisplay.textContent = calcValue;
+
+    inputDisplay = document.querySelector('#input-display');
+    inputDisplay.textContent = displayValue;
+}
 
 digitBtns = document.querySelectorAll('.digit');
 digitBtns.forEach(btn => btn.addEventListener('click', (e) => {
-    if (displayValue === '0') {
-        displayValue = e.target.textContent;
-    } else {
-        displayValue += e.target.textContent;
-    }
+    displayValue += e.target.textContent;
 
     refreshDisplay();
 }));
 
 clearBtn = document.querySelector('#clear');
 clearBtn.addEventListener('click', () => {
-    displayValue = '0';
+    firstOperand = 0;
+    displayValue = '';
+    operator = '';
+    calcState = 'first';
 
     refreshDisplay();
 })
+
 bckspBtn = document.querySelector('#backspace');
 bckspBtn.addEventListener('click', () => {
     if (displayValue.length > 1) {
         displayValue = displayValue.slice(0, -1);
     } else {
-        displayValue = '0';
+        displayValue = '';
     }
 
     refreshDisplay();
 })
 
-function refreshDisplay() {
-    display = document.querySelector('#display');
-    display.textContent = displayValue;
-}
+operatorBtns = document.querySelectorAll('.operator');
+operatorBtns.forEach(btn => btn.addEventListener('click', (e) => {
+    firstOperand = +displayValue;
+    displayValue = '';
+    operator = e.target.textContent;
+    calcState = 'second';
+
+    refreshDisplay();
+}));
+
+
+equalBtn = document.querySelector('#equal');
+equalBtn.addEventListener('click', () => {
+    if (calcState === 'second') {
+        console.log(firstOperand, +displayValue);
+        resultValue = operate(firstOperand, +displayValue, operator);
+    } else if (calcState === 'first') {
+        resultValue = firstOperand;
+    }
+    calcState = 'calculated';
+    console.log(resultValue);
+
+    refreshDisplay();
+});
