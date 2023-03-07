@@ -11,6 +11,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+    if (b === 0) return 'div_by_0';
     return a / b;
 }
 
@@ -42,7 +43,11 @@ function refreshDisplay() {
     if (calcState === 'second') {
         calcValue += `${firstOperand} ${operator}`;
     } else if (calcState === 'calculated')
-        calcValue += Math.round(resultValue * 100000) / 100000;
+        if (resultValue === 'div_by_0') {
+            calcValue += "I'm afraid I can't do that."
+        } else {
+            calcValue += Math.round(resultValue * 100000) / 100000;
+        }
 
     calcDisplay = document.querySelector('#calc-display');
     calcDisplay.textContent = calcValue;
