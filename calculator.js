@@ -39,6 +39,7 @@ let firstOperand = 0;
 let resultValue = 0;
 
 function refreshDisplay() {
+    console.log('refreshing');
     let calcValue = '';
     if (calcState === 'second') {
         calcValue += `${firstOperand} ${operator}`;
@@ -59,39 +60,48 @@ function refreshDisplay() {
 
 digitBtns = document.querySelectorAll('.digit');
 digitBtns.forEach(btn => btn.addEventListener('click', (e) => {
+    addDigit(e.target.textContent);
+}));
+
+function addDigit(digit) {
     if (calcState === 'calculated') {
         // Pressing a digit after a successful calculation should start a new one.
         calcState = 'first'
-        displayValue = e.target.textContent;
+        displayValue = digit;
     } else {
-        displayValue += e.target.textContent;
+        displayValue += digit;
     }
 
     refreshDisplay();
-}));
+};
 
 dotBtn = document.querySelector('#decimal-dot');
-dotBtn.addEventListener('click', () => {
+dotBtn.addEventListener('click', dot);
+
+function dot() {
     // Check if there is already a decimal point.
     if (displayValue !== '' && displayValue.indexOf('.') === -1) {
         displayValue += '.'
     }
-
     refreshDisplay();
-});
+};
 
 clearBtn = document.querySelector('#clear');
-clearBtn.addEventListener('click', () => {
+clearBtn.addEventListener('click', clear);
+
+function clear() {
     firstOperand = 0;
     displayValue = '';
     operator = '';
     calcState = 'first';
 
     refreshDisplay();
-})
+};
 
 bckspBtn = document.querySelector('#backspace');
-bckspBtn.addEventListener('click', () => {
+bckspBtn.addEventListener('click', backspace);
+
+function backspace() {
     if (displayValue.length > 1) {
         displayValue = displayValue.slice(0, -1);
     } else {
@@ -99,10 +109,15 @@ bckspBtn.addEventListener('click', () => {
     }
 
     refreshDisplay();
-})
+};
 
 operatorBtns = document.querySelectorAll('.operator');
-operatorBtns.forEach(btn => btn.addEventListener('click', (e) => {
+operatorBtns.forEach(btn => btn.addEventListener('click', e => {
+    selOperator(e.target.textContent);
+}));
+
+function selOperator(operatorChar) {
+
     if (calcState === 'first') {
         firstOperand = +displayValue;
     } else if (calcState === 'second') {
@@ -111,15 +126,17 @@ operatorBtns.forEach(btn => btn.addEventListener('click', (e) => {
         firstOperand = resultValue;
     }
     displayValue = '';
-    operator = e.target.textContent;
+    operator = operatorChar;
     calcState = 'second';
 
     refreshDisplay();
-}));
+};
 
 
 equalBtn = document.querySelector('#equal');
-equalBtn.addEventListener('click', () => {
+equalBtn.addEventListener('click', equal)
+
+function equal() {
     if (calcState === 'second') {
         resultValue = operate(firstOperand, +displayValue, operator);
     } else if (calcState === 'first') {
@@ -129,4 +146,29 @@ equalBtn.addEventListener('click', () => {
     calcState = 'calculated';
 
     refreshDisplay();
+};
+
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        equal();
+    } else if (is_numeric(e.key)) {
+        addDigit(e.key);
+    } else if (e.key === '.') {
+        dot();
+    } else if (e.key === 'Backspace') {
+        backspace();
+    } else if (e.key === 'Delete') {
+        clear();
+    } else if (is_operator(e.key)) {
+        selOperator(e.key);
+
+    }
 });
+
+function is_numeric(char) {
+    return /\d/.test(char);
+}
+
+function is_operator(char) {
+    return /[+\-*\/]/.test(char);
+}
