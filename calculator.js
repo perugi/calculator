@@ -38,7 +38,6 @@ let firstOperand = 0;
 let resultValue = 0;
 
 function refreshDisplay() {
-
     let calcValue = '';
     if (calcState === 'second') {
         calcValue += `${firstOperand} ${operator}`;
@@ -54,7 +53,12 @@ function refreshDisplay() {
 
 digitBtns = document.querySelectorAll('.digit');
 digitBtns.forEach(btn => btn.addEventListener('click', (e) => {
-    displayValue += e.target.textContent;
+    if (calcState === 'calculated') {
+        calcState = 'first'
+        displayValue = e.target.textContent;
+    } else {
+        displayValue += e.target.textContent;
+    }
 
     refreshDisplay();
 }));
@@ -82,7 +86,13 @@ bckspBtn.addEventListener('click', () => {
 
 operatorBtns = document.querySelectorAll('.operator');
 operatorBtns.forEach(btn => btn.addEventListener('click', (e) => {
-    firstOperand = +displayValue;
+    if (calcState === 'first') {
+        firstOperand = +displayValue;
+    } else if (calcState === 'second') {
+        firstOperand = operate(firstOperand, +displayValue, operator);
+    } else if (calcState === 'calculated') {
+        firstOperand = resultValue;
+    }
     displayValue = '';
     operator = e.target.textContent;
     calcState = 'second';
@@ -94,13 +104,12 @@ operatorBtns.forEach(btn => btn.addEventListener('click', (e) => {
 equalBtn = document.querySelector('#equal');
 equalBtn.addEventListener('click', () => {
     if (calcState === 'second') {
-        console.log(firstOperand, +displayValue);
         resultValue = operate(firstOperand, +displayValue, operator);
     } else if (calcState === 'first') {
-        resultValue = firstOperand;
+        resultValue = +displayValue;
     }
+    displayValue = '';
     calcState = 'calculated';
-    console.log(resultValue);
 
     refreshDisplay();
 });
