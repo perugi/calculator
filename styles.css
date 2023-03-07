@@ -110,3 +110,27 @@ button {
 #equal:active {
     background-color: #c56521;
 }
+
+footer {
+    margin: 20px 0;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#gh-link {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+}
+
+#gh-logo {
+    width: 30px;
+    height: 30px;
+    margin: 0 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+#gh-link:hover #gh-logo {
+    transform: rotate(360deg) scale(1.2);
+}
