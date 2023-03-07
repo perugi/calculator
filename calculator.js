@@ -46,6 +46,7 @@ function refreshDisplay() {
         if (resultValue === 'div_by_0') {
             calcValue += "I'm afraid I can't do that."
         } else {
+            // Round the displayed results to 5 decimals.
             calcValue += Math.round(resultValue * 100000) / 100000;
         }
 
@@ -59,6 +60,7 @@ function refreshDisplay() {
 digitBtns = document.querySelectorAll('.digit');
 digitBtns.forEach(btn => btn.addEventListener('click', (e) => {
     if (calcState === 'calculated') {
+        // Pressing a digit after a successful calculation should start a new one.
         calcState = 'first'
         displayValue = e.target.textContent;
     } else {
@@ -67,6 +69,16 @@ digitBtns.forEach(btn => btn.addEventListener('click', (e) => {
 
     refreshDisplay();
 }));
+
+dotBtn = document.querySelector('#decimal-dot');
+dotBtn.addEventListener('click', () => {
+    // Check if there is already a decimal point.
+    if (displayValue !== '' && displayValue.indexOf('.') === -1) {
+        displayValue += '.'
+    }
+
+    refreshDisplay();
+});
 
 clearBtn = document.querySelector('#clear');
 clearBtn.addEventListener('click', () => {
