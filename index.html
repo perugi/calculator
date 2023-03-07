@@ -8,42 +8,68 @@
     <title>Calculator</title>
     <script src="calculator.js" defer></script>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
 </head>
 
 <body>
-    <div id="calculator">
-        <div id="calc-display"></div>
-        <div id="input-display"></div>
-        <div class="button-row">
-            <button class="control" id="clear">Clear</button>
-            <button class="control" id="backspace">Bcksp</button>
-        </div>
-        <div class="button-row">
-            <button class="digit">7</button>
-            <button class="digit">8</button>
-            <button class="digit">9</button>
-            <button class="operator">/</button>
-        </div>
-        <div class="button-row">
-            <button class="digit">4</button>
-            <button class="digit">5</button>
-            <button class="digit">6</button>
-            <button class="operator">*</button>
-        </div>
-        <div class="button-row">
-            <button class="digit">1</button>
-            <button class="digit">2</button>
-            <button class="digit">3</button>
-            <button class="operator">-</button>
-        </div>
-        <div class="button-row">
-            <button class="digit">0</button>
-            <button class="control" id="decimal-dot">.</button>
-            <button class="control" id="equal">=</button>
-            <button class="operator">+</button>
+    <div id="container">
+        <div id="calculator">
+            <div id="calc-display-container">
+                <div id="calc-display"></div>
+            </div>
+            <div id="input-display-container">
+                <div id="input-display"></div>
+            </div>
+            <div id="keyboard">
+                <div class="button-row">
+                    <button class="control" id="clear">
+                        <span class="material-symbols-outlined">
+                            delete
+                        </span></button>
+                    <button class="control" id="backspace">
+                        <span class="material-symbols-outlined">
+                            backspace
+                        </span>
+                    </button>
+                </div>
+                <div class="button-row">
+                    <button class="digit">7</button>
+                    <button class="digit">8</button>
+                    <button class="digit">9</button>
+                    <button class="operator">/</button>
+                </div>
+                <div class="button-row">
+                    <button class="digit">4</button>
+                    <button class="digit">5</button>
+                    <button class="digit">6</button>
+                    <button class="operator">*</button>
+                </div>
+                <div class="button-row">
+                    <button class="digit">1</button>
+                    <button class="digit">2</button>
+                    <button class="digit">3</button>
+                    <button class="operator">-</button>
+                </div>
+                <div class="button-row">
+                    <button class="digit">0</button>
+                    <button class="control" id="decimal-dot">.</button>
+                    <button class="control" id="equal">=</button>
+                    <button class="operator">+</button>
 
+                </div>
+            </div>
         </div>
     </div>
+
+    <footer>
+        <a id="gh-link" href="https://github.com/perugi">
+            <div>Made by</div>
+            <img id="gh-logo" src="images/githublogo.png">
+            <div>Dominik Perusko</div>
+        </a>
+    </footer>
 
 </body>
 

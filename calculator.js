@@ -42,7 +42,7 @@ function refreshDisplay() {
     if (calcState === 'second') {
         calcValue += `${firstOperand} ${operator}`;
     } else if (calcState === 'calculated')
-        calcValue += resultValue;
+        calcValue += Math.round(resultValue * 100000) / 100000;
 
     calcDisplay = document.querySelector('#calc-display');
     calcDisplay.textContent = calcValue;
