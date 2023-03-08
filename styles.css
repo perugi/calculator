@@ -111,6 +111,12 @@ button {
     background-color: #c56521;
 }
 
+#calculator,
+.display,
+button {
+    user-select: none;
+}
+
 footer {
     margin: 20px 0;
     font-size: 20px;
